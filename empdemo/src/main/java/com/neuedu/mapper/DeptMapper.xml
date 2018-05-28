@@ -7,4 +7,33 @@
     <select id="listDept" resultType="com.neuedu.entity.Dept">
         select id,dname,location from e_dept
     </select>
+
+    <delete id="deleteDeptByIds">
+        delete from e_dept where id in
+        <foreach collection="array" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="deleteEmpByDept">
+        delete from e_emp where dept_id in
+        <foreach collection="array" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="getDeptById" resultType="com.neuedu.entity.Dept">
+        select id,dname,location from e_dept where id = #{id}
+    </select>
+
+    <insert id="saveDept">
+        insert into e_dept (dname,location)
+        value(#{dept.dname},#{dept.location})
+    </insert>
+
+    <update id="updateDept">
+        update e_dept set dname = #{dept.dname},location = #{dept.location} where id = #{dept.id}
+    </update>
+
+
 </mapper>

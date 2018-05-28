@@ -15,7 +15,7 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th><input type="checkbox"></th>
+                    <th><input type="checkbox" class="chooseAll"></th>
                     <th>#</th>
                     <th>部门名称</th>
                     <th>工作地点</th>
@@ -25,13 +25,13 @@
                 <tbody>
                 <c:forEach items="${pageInfo.list}" var="dept" varStatus="index">
                     <tr>
-                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox" class="item" value="${dept.id}"></td>
                         <td>${index.index + 1}</td>
                         <td>${dept.dname}</td>
                         <td>${dept.location}</td>
                         <td>
-                            <button type="button" class="btn btn-info">修改</button>
-                            <button type="button" class="btn btn-danger">删除</button>
+                            <button type="button" class="btn btn-info update-btn" update-id="${dept.id}">修改</button>
+                            <button type="button" class="btn btn-danger delete-btn" delete-id="${dept.id}">删除</button>
                         </td>
                     </tr>
                 </c:forEach>
@@ -40,8 +40,8 @@
         </div>
         <div class="row">
             <div class="col-sm-9">
-                <button type="button" class="btn btn-primary">增加</button>
-                <button type="button" class="btn btn-danger">删除</button>
+                <button type="button" class="btn btn-primary addDept">增加</button>
+                <button type="button" class="btn btn-danger deleteAll">删除</button>
             </div>
             <div class="col-sm-3">
                 <nav aria-label="Page navigation">
@@ -84,8 +84,51 @@
         </div>
         <div class="row foot"></div>
     </div>
-
     <script type="text/javascript" src="${pageContext.request.contextPath}/r/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/r/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //使用jquery的绑定方式来绑定一个点击事件
+            $(".delete-btn").click(function(){
+                //$(this)代表着获取当前触发这个方法的节点对象attr拿到属性的值
+                var id = $(this).attr("delete-id");
+                var path = "${pageContext.request.contextPath}/dept/deleteDeptById?id=" + id;
+                //改变地址栏发送请求
+                location.href = path;
+            })
+            //全选的点击事件
+            $(".chooseAll").click(function(){
+                $(".item").prop("checked",$(this).prop("checked"));
+            })
+            //删除全部
+            $(".deleteAll").click(function(){
+                var ids = [];
+                //拿到所有多选框的状态
+                $(".item").each(function(){
+                    var item = $(this);
+                    if(item.prop("checked")){
+                        var id = item.val();
+                        ids[ids.length] = id;
+                    }
+                });
+                var path = "${pageContext.request.contextPath}/dept/deleteDeptById?id=" + ids;
+                location.href = path;
+            });
+
+            $(".addDept").click(function(){
+                var path = "${pageContext.request.contextPath}/dept/addDeptView";
+                location.href = path;
+            })
+
+
+            $(".update-btn").click(function(){
+                //$(this)代表着获取当前触发这个方法的节点对象attr拿到属性的值
+                var id = $(this).attr("update-id");
+                var path = "${pageContext.request.contextPath}/dept/updateDeptView?id=" + id;
+                //改变地址栏发送请求
+                location.href = path;
+            })
+        });
+    </script>
 </body>
 </html>

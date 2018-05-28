@@ -4,6 +4,7 @@ package com.neuedu.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.neuedu.entity.Dept;
+import com.neuedu.entity.Emp;
 import com.neuedu.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,5 +32,40 @@ public class DeptController {
         System.out.println(pageInfo);
         httpSession.setAttribute("deptPageNum",pageInfo.getPageNum());
         return "deptList";
+    }
+
+    @RequestMapping(value = {"/deleteDeptById"})
+    public String deleteDeptById(int[] id,HttpSession httpSession){
+        deptService.deleteEmpByDept(id);
+        deptService.deleteDeptByIds(id);
+        Integer pageNum = (Integer) httpSession.getAttribute("deptPageNum");
+        return "redirect:/dept/deptlist?pageNum=" + pageNum;
+    }
+
+    @RequestMapping({"/addDeptView"})
+    public String addDeptView(ModelMap param){
+        param.put("deptList",deptService.listDept());
+        return "addDept";
+    }
+
+
+    @RequestMapping({"/addDept"})
+    public String addDept(Dept dept){
+        int pageNum = deptService.saveDept(dept);
+        return "redirect:/dept/deptlist?pageNum=" + pageNum;
+    }
+
+    @RequestMapping(value = {"/updateDeptView"})
+    public String updateDeptView(ModelMap param,int id){
+        /*param.put("deptList",deptService.listDept());*/
+        param.put("dept",deptService.getDeptById(id));
+        return "updateDept";
+    }
+
+    @RequestMapping(value = {"/updateDept"})
+    public String updateDept(Dept dept, HttpSession httpSession){
+        deptService.updateDept(dept);
+        Integer pageNum = (Integer) httpSession.getAttribute("deptPageNum");
+        return "redirect:/dept/deptlist?pageNum="+ pageNum;
     }
 }
