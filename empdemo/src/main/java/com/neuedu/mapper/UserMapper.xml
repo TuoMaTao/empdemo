@@ -7,4 +7,8 @@
     <select id="getUserByUsername" resultType="com.neuedu.entity.User">
         select id,username,password,headimg from e_user where username = #{username}
     </select>
+
+    <insert id="saveUser">
+        insert into e_user (username,password,headimg) value(#{user.username},#{user.password},#{user.headimg})
+    </insert>
 </mapper>

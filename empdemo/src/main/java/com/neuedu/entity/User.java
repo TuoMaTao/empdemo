@@ -1,5 +1,6 @@
 package com.neuedu.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 @Data
 public class User {

@@ -10,7 +10,15 @@
 </head>
 <body>
 <div class="container">
-    <div class="row head"></div>
+    <div class="row head">
+        <div class="col-sm-2">
+        欢迎${user.username}
+        <img src="${pageContext.request.contextPath}${user.headimg}" class="img-circle" width="50px" height="50px">
+        </div>
+        <div class="col-sm-3">
+            <button class="esc" type="submit" style="margin-left: 920px;margin-top: 45px">退出</button>
+        </div>
+    </div>
     <div class="row">
         <table class="table table-striped table-hover">
             <thead>
@@ -48,6 +56,7 @@
         <div class="col-sm-9">
             <button type="button" class="btn btn-primary addEmp">增加</button>
             <button type="button" class="btn btn-danger deleteAll">删除</button>
+            <button type="button" class="btn btn-danger lookDept">查看部门列表</button>
         </div>
         <div class="col-sm-3">
             <nav aria-label="Page navigation">
@@ -143,8 +152,13 @@
                     ids[ids.length] = id;
                 }
             });
-            var path = "${pageContext.request.contextPath}/emp/deleteEmpById?id=" + ids;
-            location.href = path;
+            if(ids.length != 0){
+                var path = "${pageContext.request.contextPath}/emp/deleteEmpById?id=" + ids;
+                location.href = path;
+            }else{
+                var path1 = "${pageContext.request.contextPath}/emp/emplist?pageNum=" + ${pageInfo.pageNum};
+                location.href = path1;
+            }
         });
 
         $(".addEmp").click(function(){
@@ -160,6 +174,17 @@
             //改变地址栏发送请求
             location.href = path;
         })
+        $(".esc").click(function(){
+            var path = "${pageContext.request.contextPath}/user/quit";
+            //改变地址栏发送请求
+            location.href = path;
+        })
+        $(".lookDept").click(function(){
+            var path = "${pageContext.request.contextPath}/dept/deptlist";
+            //改变地址栏发送请求
+            location.href = path;
+        })
+
     });
 </script>
 </body>

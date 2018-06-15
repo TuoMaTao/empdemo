@@ -42,6 +42,7 @@
             <div class="col-sm-9">
                 <button type="button" class="btn btn-primary addDept">增加</button>
                 <button type="button" class="btn btn-danger deleteAll">删除</button>
+                <button type="button" class="btn btn-danger back">返回员工列表</button>
             </div>
             <div class="col-sm-3">
                 <nav aria-label="Page navigation">
@@ -128,6 +129,12 @@
                 //改变地址栏发送请求
                 location.href = path;
             })
+        })
+        $(".back").click(function(){
+            var path = "${pageContext.request.contextPath}/emp/emplist";
+            //改变地址栏发送请求
+            location.href = path;
+        })
         });
     </script>
 </body>

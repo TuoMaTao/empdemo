@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row head"></div>
         <div class="row body">
-            <form class="form-horizontal" action="${pageContext.request.contextPath}/user/regist" method="post" id="registFrom">
+            <form class="form-horizontal" action="${pageContext.request.contextPath}/user/regist" method="post" id="registFrom" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="username" class="col-sm-2 control-label">用户名</label>
                     <div class="col-sm-6 username">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="button" class="btn btn-primary sub">注册</button>
+                        <button type="button" class="btn btn-primary sub">提交</button>
                     </div>
                 </div>
             </form>
